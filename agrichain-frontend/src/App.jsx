@@ -8,20 +8,21 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 
-// Auth
+// ================= AUTH =================
 import FarmerLogin from "./pages/auth/FarmerLogin";
 import BuyerLogin from "./pages/auth/BuyerLogin";
 import FarmerRegister from "./pages/auth/FarmerRegister";
 import BuyerRegister from "./pages/auth/BuyerRegister";
 
-// Farmer
+// ================= FARMER =================
 import FarmerDashboard from "./pages/farmer/FarmerDashboard";
 import UploadCrop from "./pages/farmer/UploadCrop";
 import MyCrops from "./pages/farmer/MyCrops";
 import FarmerOrders from "./pages/farmer/FarmerOrders";
 import TraceCrop from "./pages/farmer/TraceCrop";
+import FarmerProduct from "./pages/farmer/FarmerProduct"; // ✅ ADDED
 
-// Buyer
+// ================= BUYER =================
 import BuyerDashboard from "./pages/buyer/BuyerDashboard";
 import Marketplace from "./pages/buyer/Marketplace";
 import Cart from "./pages/buyer/Cart";
@@ -29,7 +30,7 @@ import MyOrders from "./pages/buyer/MyOrders";
 import TrackOrder from "./pages/buyer/TrackOrder";
 import BuyerProduct from "./pages/buyer/BuyerProduct";
 
-// Shared
+// ================= SHARED =================
 import Account from "./pages/Account";
 
 function App() {
@@ -37,14 +38,15 @@ function App() {
     <AuthProvider>
       <Router>
         <Navbar />
+
         <Routes>
-          {/* Auth */}
+          {/* ================= AUTH ================= */}
           <Route path="/farmer/login" element={<FarmerLogin />} />
           <Route path="/buyer/login" element={<BuyerLogin />} />
           <Route path="/farmer/register" element={<FarmerRegister />} />
           <Route path="/buyer/register" element={<BuyerRegister />} />
-          {/* Farmer */}
 
+          {/* ================= FARMER ================= */}
           <Route
             path="/farmer/dashboard"
             element={
@@ -53,6 +55,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/farmer/upload"
             element={
@@ -61,6 +64,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/farmer/mycrops"
             element={
@@ -69,11 +73,22 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/farmer/orders"
             element={
               <ProtectedRoute allowedRoles={["farmer"]}>
                 <FarmerOrders />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* ✅ FIXED (THIS WAS MISSING) */}
+          <Route
+            path="/farmer/product/:id"
+            element={
+              <ProtectedRoute allowedRoles={["farmer"]}>
+                <FarmerProduct />
               </ProtectedRoute>
             }
           />
@@ -86,7 +101,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Buyer */}
+
+          {/* ================= BUYER ================= */}
           <Route
             path="/buyer/dashboard"
             element={
@@ -95,6 +111,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/buyer/marketplace"
             element={
@@ -103,6 +120,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/buyer/cart"
             element={
@@ -111,6 +129,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/buyer/orders"
             element={
@@ -119,6 +138,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/buyer/track/:id"
             element={
@@ -127,6 +147,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/buyer/product/:id"
             element={
@@ -135,7 +156,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Shared */}
+
+          {/* ================= SHARED ================= */}
           <Route
             path="/account"
             element={
@@ -144,6 +166,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* ================= DEFAULT ================= */}
           <Route path="/" element={<Navigate to="/farmer/login" replace />} />
         </Routes>
       </Router>

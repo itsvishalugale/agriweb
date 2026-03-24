@@ -97,3 +97,31 @@ error: Email send error: Invalid login: 535-5.7.8 Username and Password not acce
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2b083656f65sm134376175ad.45 - gsmtp {"timestamp":"2026-03-23T07:07:42.193Z"}
 error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b0409c1cesm8229421b3a.36 - gsmtp {"timestamp":"2026-03-23T07:07:49.730Z"}
+info: Server running on port 5000 {"timestamp":"2026-03-24T16:49:04.636Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"user-service","timestamp":"2026-03-24T16:49:05.042Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2b0835551c3sm145554455ad.35 - gsmtp {"timestamp":"2026-03-24T16:52:01.463Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b040debf9sm13335840b3a.47 - gsmtp {"timestamp":"2026-03-24T16:52:40.874Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2b08351675esm196466265ad.14 - gsmtp {"timestamp":"2026-03-24T16:52:44.433Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b0409bf65sm13172977b3a.34 - gsmtp {"timestamp":"2026-03-24T16:53:29.696Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b0409c6besm15220250b3a.32 - gsmtp {"timestamp":"2026-03-24T16:53:40.954Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2b0836a3430sm143359135ad.79 - gsmtp {"timestamp":"2026-03-24T16:53:55.777Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b04220d9asm12501672b3a.60 - gsmtp {"timestamp":"2026-03-24T16:53:56.194Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-35c0ddaa7easm27878a91.10 - gsmtp {"timestamp":"2026-03-24T16:53:57.321Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b0409c11asm12364920b3a.30 - gsmtp {"timestamp":"2026-03-24T16:53:58.862Z"}
+info: Server running on port 5000 {"timestamp":"2026-03-24T17:13:40.044Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"user-service","timestamp":"2026-03-24T17:13:40.132Z"}
+info: Server running on port 5000 {"timestamp":"2026-03-24T17:21:28.461Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"user-service","timestamp":"2026-03-24T17:21:28.624Z"}
+info: Server running on port 5000 {"timestamp":"2026-03-24T17:38:15.330Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"user-service","timestamp":"2026-03-24T17:38:15.544Z"}
+info: Server running on port 5000 {"timestamp":"2026-03-24T17:39:02.547Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"user-service","timestamp":"2026-03-24T17:39:02.695Z"}

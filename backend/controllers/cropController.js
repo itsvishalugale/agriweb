@@ -156,3 +156,40 @@ exports.updateProgress = async (req, res) => {
     res.status(500).json({ error: "Update failed" });
   }
 };
+exports.deleteCrop = async (req, res) => {
+  try {
+    const crop = await Crop.findOneAndDelete({
+      _id: req.params.id,
+      farmer: req.user.id, // ✅ security
+    });
+
+    if (!crop) {
+      return res.status(404).json({ error: "Crop not found" });
+    }
+
+    res.json({ message: "Crop deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Delete failed" });
+  }
+};
+exports.updateCrop = async (req, res) => {
+  try {
+    const crop = await Crop.findOneAndUpdate(
+      { _id: req.params.id, farmer: req.user.id },
+      {
+        name: req.body.name,
+        price: req.body.price,
+        updatedAt: new Date(),
+      },
+      { returnDocument: "after" },
+    );
+
+    if (!crop) {
+      return res.status(404).json({ error: "Crop not found" });
+    }
+
+    res.json({ crop });
+  } catch (error) {
+    res.status(500).json({ error: "Update failed" });
+  }
+};

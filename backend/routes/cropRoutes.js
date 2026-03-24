@@ -7,6 +7,8 @@ const {
   getCropById,
   traceCrop,
   updateProgress,
+  deleteCrop,
+  updateCrop,
 } = require("../controllers/cropController");
 const auth = require("../middleware/authMiddleware");
 const role = require("../middleware/roleMiddleware");
@@ -33,5 +35,7 @@ router.get("/available", auth, getAvailableCrops);
 router.get("/:id", auth, getCropById);
 router.get("/trace/:id", auth, traceCrop);
 router.post("/progress", auth, role(["farmer"]), updateProgress);
+router.delete("/:id", auth, role(["farmer"]), deleteCrop);
+router.put("/:id", auth, role(["farmer"]), updateCrop);
 
 module.exports = router;
