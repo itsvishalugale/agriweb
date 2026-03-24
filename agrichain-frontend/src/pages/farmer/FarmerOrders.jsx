@@ -13,6 +13,7 @@ const farmerLinks = [
 export default function FarmerOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updatingId, setUpdatingId] = useState(null); // ✅ track loading per order
 
   useEffect(() => {
     fetchOrders();
@@ -22,15 +23,18 @@ export default function FarmerOrders() {
     try {
       const res = await api.get("/orders/my");
       setOrders(res.data);
-    } catch (err) {
-      console.error("Failed to load orders");
+    } catch {
+      alert("Failed to load orders");
     } finally {
       setLoading(false);
     }
   };
 
+  // ================= STATUS UPDATE =================
   const updateStatus = async (orderId, status) => {
     try {
+      setUpdatingId(orderId);
+
       await api.put(`/orders/${orderId}/status`, { status });
 
       setOrders((prev) =>
@@ -38,6 +42,26 @@ export default function FarmerOrders() {
       );
     } catch (err) {
       alert(err.response?.data?.error || "Update failed");
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  // ================= STATUS COLOR =================
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "#ed8936";
+      case "approved":
+        return "#3182ce";
+      case "shipped":
+        return "#805ad5";
+      case "delivered":
+        return "#38a169";
+      case "rejected":
+        return "#e53e3e";
+      default:
+        return "#718096";
     }
   };
 
@@ -56,75 +80,110 @@ export default function FarmerOrders() {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
-            {orders.map((order) => (
-              <div key={order._id} className="card">
-                <div className="card-body">
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <h3>{order.crop?.name}</h3>
-                    <span className={`status-${order.status}`}>
-                      {order.status.toUpperCase()}
-                    </span>
-                  </div>
+            {orders.map((order) => {
+              const isUpdating = updatingId === order._id;
 
-                  <p>Buyer: {order.buyer?.accountDetails?.name}</p>
-                  <p>Email: {order.buyer?.email}</p>
-                  <p>Quantity: {order.quantity}</p>
-                  <p>Total: ₹{order.totalPrice}</p>
+              return (
+                <div key={order._id} className="card">
+                  <div className="card-body">
+                    {/* HEADER */}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h3>{order.crop?.name || "Crop"}</h3>
 
-                  <p style={{ fontSize: "0.9rem", color: "#718096" }}>
-                    {new Date(order.createdAt).toLocaleDateString()}
-                  </p>
+                      <span
+                        style={{
+                          background: getStatusColor(order.status),
+                          color: "white",
+                          padding: "4px 10px",
+                          borderRadius: "20px",
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        {order.status.toUpperCase()}
+                      </span>
+                    </div>
 
-                  {/* ACTION BUTTONS */}
-                  <div
-                    style={{
-                      marginTop: "1rem",
-                      display: "flex",
-                      gap: "0.5rem",
-                    }}
-                  >
-                    {order.status === "pending" && (
-                      <>
+                    {/* DETAILS */}
+                    <p>Buyer: {order.buyer?.accountDetails?.name}</p>
+                    <p>Email: {order.buyer?.email}</p>
+                    <p>Quantity: {order.quantity}</p>
+                    <p>Total: ₹{order.totalPrice}</p>
+
+                    <p style={{ fontSize: "0.85rem", color: "#718096" }}>
+                      {new Date(order.createdAt).toLocaleString("en-IN")}
+                    </p>
+
+                    {/* ACTION BUTTONS */}
+                    <div
+                      style={{
+                        marginTop: "1rem",
+                        display: "flex",
+                        gap: "0.5rem",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {/* PENDING */}
+                      {order.status === "pending" && (
+                        <>
+                          <button
+                            className="btn"
+                            disabled={isUpdating}
+                            onClick={() => updateStatus(order._id, "approved")}
+                          >
+                            {isUpdating ? "Processing..." : "Approve"}
+                          </button>
+
+                          <button
+                            className="btn"
+                            style={{ background: "#e53e3e" }}
+                            disabled={isUpdating}
+                            onClick={() => updateStatus(order._id, "rejected")}
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )}
+
+                      {/* APPROVED */}
+                      {order.status === "approved" && (
                         <button
                           className="btn"
-                          onClick={() => updateStatus(order._id, "approved")}
+                          disabled={isUpdating}
+                          onClick={() => updateStatus(order._id, "shipped")}
                         >
-                          Approve
+                          Mark as Shipped
                         </button>
+                      )}
 
+                      {/* SHIPPED */}
+                      {order.status === "shipped" && (
                         <button
                           className="btn"
-                          style={{ background: "red" }}
-                          onClick={() => updateStatus(order._id, "rejected")}
+                          disabled={isUpdating}
+                          onClick={() => updateStatus(order._id, "delivered")}
                         >
-                          Reject
+                          Mark as Delivered
                         </button>
-                      </>
-                    )}
+                      )}
 
-                    {order.status === "approved" && (
-                      <button
-                        className="btn"
-                        onClick={() => updateStatus(order._id, "shipped")}
-                      >
-                        Ship
-                      </button>
-                    )}
-
-                    {order.status === "shipped" && (
-                      <button
-                        className="btn"
-                        onClick={() => updateStatus(order._id, "delivered")}
-                      >
-                        Deliver
-                      </button>
-                    )}
+                      {/* FINAL STATES */}
+                      {(order.status === "delivered" ||
+                        order.status === "rejected") && (
+                        <span style={{ color: "#718096", fontSize: "0.9rem" }}>
+                          No further actions
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>

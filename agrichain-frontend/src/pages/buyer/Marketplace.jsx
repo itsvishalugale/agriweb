@@ -16,12 +16,20 @@ export default function Marketplace() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get("/crops/available")
-      .then((res) => setCrops(res.data))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+    fetchCrops();
   }, []);
+
+  const fetchCrops = async () => {
+    try {
+      const res = await api.get("/crops/available");
+      setCrops(res.data);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load marketplace");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="dashboard-layout">
@@ -40,7 +48,11 @@ export default function Marketplace() {
         ) : (
           <div className="grid">
             {crops.map((crop) => (
-              <CropCard key={crop._id} crop={crop} />
+              <CropCard
+                key={crop._id}
+                crop={crop}
+                role="buyer" // ✅ IMPORTANT FIX
+              />
             ))}
           </div>
         )}

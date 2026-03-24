@@ -39,3 +39,10 @@ error: Email send error: Invalid login: 535-5.7.8 Username and Password not acce
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-35c0ddaa7easm27878a91.10 - gsmtp {"timestamp":"2026-03-24T16:53:57.321Z"}
 error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b0409c11asm12364920b3a.30 - gsmtp {"timestamp":"2026-03-24T16:53:58.862Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b0409c6besm15371110b3a.32 - gsmtp {"timestamp":"2026-03-24T18:14:20.814Z"}
+error: Email send error: Invalid greeting. response=421 Cannot connect to SMTP server 192.178.211.109 (192.178.211.109:587), connect error 10053: 421 Cannot connect to SMTP server 192.178.211.109 (192.178.211.109:587), connect error 10053 {"timestamp":"2026-03-24T18:21:48.616Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b041059a5sm16090182b3a.53 - gsmtp {"timestamp":"2026-03-24T18:32:55.627Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2b0835604cdsm147621085ad.37 - gsmtp {"timestamp":"2026-03-24T18:33:00.216Z"}

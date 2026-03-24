@@ -15,7 +15,7 @@ export default function MyCrops() {
   const [crops, setCrops] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Modal state
+  // modal state
   const [editingCrop, setEditingCrop] = useState(null);
   const [formData, setFormData] = useState({ name: "", price: "" });
 
@@ -28,7 +28,7 @@ export default function MyCrops() {
       const res = await api.get("/crops/my");
       setCrops(res.data);
     } catch {
-      alert("Failed to load crops");
+      alert("❌ Failed to load crops");
     } finally {
       setLoading(false);
     }
@@ -36,14 +36,21 @@ export default function MyCrops() {
 
   // ================= DELETE =================
   const handleDelete = async (cropId) => {
-    const confirmDelete = window.confirm("Delete this crop?");
+    const confirmDelete = window.confirm(
+      "⚠️ Are you sure you want to delete this crop?",
+    );
     if (!confirmDelete) return;
 
     try {
       await api.delete(`/crops/${cropId}`);
+
+      // remove from UI instantly
       setCrops((prev) => prev.filter((c) => c._id !== cropId));
-    } catch {
-      alert("Delete failed");
+
+      alert("✅ Crop deleted successfully");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Delete failed");
     }
   };
 
@@ -59,7 +66,7 @@ export default function MyCrops() {
   // ================= EDIT SAVE =================
   const handleUpdate = async () => {
     if (!formData.name || !formData.price) {
-      alert("All fields required");
+      alert("⚠️ All fields required");
       return;
     }
 
@@ -73,9 +80,11 @@ export default function MyCrops() {
         prev.map((c) => (c._id === editingCrop._id ? res.data.crop : c)),
       );
 
-      setEditingCrop(null); // close modal
-    } catch {
-      alert("Update failed");
+      setEditingCrop(null);
+      alert("✅ Crop updated successfully");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Update failed");
     }
   };
 
@@ -97,7 +106,7 @@ export default function MyCrops() {
                 key={crop._id}
                 crop={crop}
                 role="farmer"
-                onDelete={handleDelete}
+                onDelete={handleDelete} // ✅ DELETE CONNECTED
                 onEdit={handleEdit}
               />
             ))}

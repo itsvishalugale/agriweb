@@ -125,3 +125,10 @@ info: Server running on port 5000 {"timestamp":"2026-03-24T17:38:15.330Z"}
 {"level":"info","message":"MongoDB connected successfully","service":"user-service","timestamp":"2026-03-24T17:38:15.544Z"}
 info: Server running on port 5000 {"timestamp":"2026-03-24T17:39:02.547Z"}
 {"level":"info","message":"MongoDB connected successfully","service":"user-service","timestamp":"2026-03-24T17:39:02.695Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b0409c6besm15371110b3a.32 - gsmtp {"timestamp":"2026-03-24T18:14:20.814Z"}
+error: Email send error: Invalid greeting. response=421 Cannot connect to SMTP server 192.178.211.109 (192.178.211.109:587), connect error 10053: 421 Cannot connect to SMTP server 192.178.211.109 (192.178.211.109:587), connect error 10053 {"timestamp":"2026-03-24T18:21:48.616Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-82b041059a5sm16090182b3a.53 - gsmtp {"timestamp":"2026-03-24T18:32:55.627Z"}
+error: Email send error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2b0835604cdsm147621085ad.37 - gsmtp {"timestamp":"2026-03-24T18:33:00.216Z"}

@@ -1,11 +1,34 @@
 import { Link } from "react-router-dom";
 
 export default function CropCard({ crop, role, onDelete, onEdit }) {
-  // ✅ Safe checks
   const isOrdered = crop?.available === false;
+
   const imageUrl = crop?.imageFilename
     ? `http://localhost:5000/uploads/${crop.imageFilename}`
     : "https://via.placeholder.com/320x220?text=No+Image";
+
+  // ================= QUICK BUY =================
+  const handleQuickBuy = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/orders/place", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          cropId: crop._id,
+          quantity: 1,
+        }),
+      });
+
+      if (!res.ok) throw new Error();
+
+      alert("✅ Order placed successfully!");
+    } catch {
+      alert("❌ Order failed");
+    }
+  };
 
   return (
     <div className="card crop-card" style={{ position: "relative" }}>
@@ -14,9 +37,9 @@ export default function CropCard({ crop, role, onDelete, onEdit }) {
         src={imageUrl}
         alt={crop?.name || "Crop"}
         className="crop-image"
-        onError={(e) => {
-          e.target.src = "https://via.placeholder.com/320x220?text=No+Image";
-        }}
+        onError={(e) =>
+          (e.target.src = "https://via.placeholder.com/320x220?text=No+Image")
+        }
       />
 
       {/* CONTENT */}
@@ -36,9 +59,19 @@ export default function CropCard({ crop, role, onDelete, onEdit }) {
 
         {/* ================= BUYER ================= */}
         {role === "buyer" && (
-          <Link to={`/buyer/product/${crop._id}`} className="btn">
-            View Details
-          </Link>
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <Link to={`/buyer/product/${crop._id}`} className="btn">
+              View Details
+            </Link>
+
+            <button
+              className="btn"
+              style={{ background: "#38a169" }}
+              onClick={handleQuickBuy}
+            >
+              Quick Buy
+            </button>
+          </div>
         )}
 
         {/* ================= FARMER ================= */}
@@ -51,12 +84,10 @@ export default function CropCard({ crop, role, onDelete, onEdit }) {
               marginTop: "0.5rem",
             }}
           >
-            {/* VIEW */}
             <Link to={`/farmer/product/${crop._id}`} className="btn">
               View
             </Link>
 
-            {/* EDIT */}
             <button
               className="btn"
               style={{ background: "#3182ce" }}
@@ -65,7 +96,6 @@ export default function CropCard({ crop, role, onDelete, onEdit }) {
               Edit
             </button>
 
-            {/* DELETE */}
             <button
               className="btn"
               style={{
@@ -73,11 +103,6 @@ export default function CropCard({ crop, role, onDelete, onEdit }) {
                 cursor: isOrdered ? "not-allowed" : "pointer",
               }}
               disabled={isOrdered}
-              title={
-                isOrdered
-                  ? "Cannot delete: Crop already ordered"
-                  : "Delete crop"
-              }
               onClick={() => !isOrdered && onDelete && onDelete(crop._id)}
             >
               {isOrdered ? "Locked" : "Delete"}
